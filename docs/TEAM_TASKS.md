@@ -2,7 +2,7 @@
 
 This document divides the Contact App workshop implementation among six team members. Each member should coordinate shared decisions with the other members before changing interfaces or behavior.
 
-## Member 1 — Contact model and validation
+## Member 1 — Contact model and validation   -Jay
 
 **Goal:** Implement the model class that represents one contact and prevents invalid data from entering the application.
 
@@ -35,7 +35,7 @@ public String toString()
 
 **Done when:** Valid contacts can be created and updated, while invalid data throws `IllegalArgumentException`.
 
-## Member 2 — Custom exceptions and DAO contract
+## Member 2 — Custom exceptions and DAO contract - Padma
 
 **Goal:** Define the checked exceptions for persistence and the interface that specifies data operations.
 
@@ -76,7 +76,7 @@ public interface ContactDAO {
 
 **Done when:** The exceptions compile and the DAO interface is ready for Member 3 to implement.
 
-## Member 3 — File-based DAO implementation
+## Member 3 — File-based DAO implementation - Carl
 
 **Goal:** Persist contacts in a text file and retrieve them through the `ContactDAO` interface.
 
@@ -109,7 +109,7 @@ public Contact findByName(String name) throws ContactStorageException
 
 **Done when:** Contacts can be saved and loaded, duplicates are rejected, and storage failures are reported through checked exceptions.
 
-## Member 4 — Contact view
+## Member 4 — Contact view - Veselina
 
 **Goal:** Implement the console interface for collecting input and displaying information.
 
@@ -137,7 +137,7 @@ public void displayError(String message)
 
 **Done when:** The user can read the menu, enter responses, and see contacts, messages, and errors through the view.
 
-## Member 5 — Controller and centralized exception handling
+## Member 5 — Controller and centralized exception handling  -Anas
 
 **Goal:** Coordinate the view and DAO, manage the application loop, and report errors to the user.
 
@@ -175,7 +175,7 @@ private void searchContact()
 
 **Done when:** The controller runs the menu-driven application, and errors are shown through the view without console output from the DAO or model.
 
-## Member 6 — Main, integration, tests, and documentation
+## Member 6 — Main, integration, tests, and documentation  -Tukue
 
 **Goal:** Assemble the application, verify that the layers work together, and prepare usage documentation.
 
