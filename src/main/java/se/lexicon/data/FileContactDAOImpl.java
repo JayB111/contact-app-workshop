@@ -67,12 +67,16 @@ public class FileContactDAOImpl implements ContactDAO {
 
         Path parent = filePath.getParent();
         if (parent != null && !Files.exists(parent)) {
-            Files.createDirectories(parent);
+            try {
+                Files.createDirectories(parent);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         try (BufferedWriter writer = Files.newBufferedWriter(filePath, StandardOpenOption.CREATE, StandardOpenOption.WRITE)) {
             for (Contact c : contacts) {
-                writer.write(c.getName() + "," + c.getPhone() + "\n");
+                writer.write(c.getName() + "," + c.getPhoneNumber() + "\n");
             }
         } catch (IOException e) {
             throw new ContactStorageException("Error writing file", e);
