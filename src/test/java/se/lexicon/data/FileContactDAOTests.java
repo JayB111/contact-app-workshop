@@ -94,20 +94,23 @@ public class FileContactDAOTests {
 
     @Test
     public void testDirectoryCreationFailure() throws Exception {
-        Path tempFile = Files.createTempFile("contact", ".txt");
-        Path parent = tempFile.getParent();
+        Path tempDir = Files.createTempDirectory("file-contact-dao-test-");
+        Path daoFile = tempDir.resolve("contacts.csv");
+        Files.createFile(daoFile);
 
-        // Delete the temp file first to ensure the parent directory is empty
-        Files.delete(tempFile);
+        try {
+            Files.delete(daoFile);
+            if (Files.exists(tempDir)) {
+                Files.delete(tempDir);
+            }
 
-        // Now delete the parent directory
-        if (Files.exists(parent)) {
-            Files.delete(parent); // ✅ Ensure parent directory is deleted
+            FileContactDAOImpl dao = new FileContactDAOImpl(daoFile);
+            assertThrows(ContactStorageException.class, () -> {
+                dao.save(new Contact("John Doe", "1234567890"));
+            });
+        } finally {
+            Files.deleteIfExists(daoFile);
+            Files.deleteIfExists(tempDir);
         }
-
-        FileContactDAOImpl dao = new FileContactDAOImpl(tempFile);
-        assertThrows(ContactStorageException.class, () -> {
-            dao.save(new Contact("John Doe", "1234567890"));
-        });
     }
 }
