@@ -71,7 +71,7 @@ public class FileContactDAOTests {
     public void testInvalidData() throws Exception {
         Path tempFile = Files.createTempFile("contact", ".txt");
         try (BufferedWriter writer = Files.newBufferedWriter(tempFile)) {
-            writer.write("John,,123\n");
+            writer.write("John|\n");
         }
 
         FileContactDAOImpl dao = new FileContactDAOImpl(tempFile);
