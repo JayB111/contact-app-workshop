@@ -23,13 +23,13 @@ public class FileContactDAOImpl implements ContactDAO {
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.trim().split(",");
                 if (parts.length != 2) {
-                    throw new ContactStorageException("Invalid record format: " + line, new IllegalArgumentException("Invalid record format"));
+                    throw new IllegalArgumentException("Invalid record format: " + line);
                 }
                 String name = parts[0].trim();
                 String phone = parts[1].trim();
 
                 if (name.isEmpty() || phone.isEmpty()) {
-                    throw new ContactStorageException("Invalid contact data: " + line, new IllegalArgumentException("Invalid contact data"));
+                    throw new IllegalArgumentException("Invalid contact data: " + line);
                 }
 
                 contacts.add(new Contact(name, phone));
@@ -70,13 +70,13 @@ public class FileContactDAOImpl implements ContactDAO {
             try {
                 Files.createDirectories(parent);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                throw new ContactStorageException("Error creating directory", e);
             }
         }
 
         try (BufferedWriter writer = Files.newBufferedWriter(filePath, StandardOpenOption.CREATE, StandardOpenOption.WRITE)) {
             for (Contact c : contacts) {
-                writer.write(c.getName() + "," + c.getPhoneNumber() + "\n");
+                writer.write(c.getName() + "|" + c.getPhoneNumber() + "\n");
             }
         } catch (IOException e) {
             throw new ContactStorageException("Error writing file", e);
