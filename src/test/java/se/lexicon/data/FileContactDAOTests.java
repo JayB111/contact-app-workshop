@@ -64,7 +64,7 @@ public class FileContactDAOTests {
         }
 
         FileContactDAOImpl dao = new FileContactDAOImpl(tempFile);
-        assertThrows(IllegalArgumentException.class, dao::findAll);
+        assertThrows(ContactStorageException.class, dao::findAll);
     }
 
     @Test
@@ -75,7 +75,55 @@ public class FileContactDAOTests {
         }
 
         FileContactDAOImpl dao = new FileContactDAOImpl(tempFile);
-        assertThrows(IllegalArgumentException.class, dao::findAll);
+        assertThrows(ContactStorageException.class, dao::findAll);
+    }
+
+    @Test
+    public void testDelimiterInNameSurvivesReload() throws Exception {
+        Path tempFile = Files.createTempFile("contact", ".txt");
+        try {
+            FileContactDAOImpl dao = new FileContactDAOImpl(tempFile);
+            dao.save(new Contact("Alice|Team", "0123456789"));
+            dao.save(new Contact("Bob", "0987654321"));
+
+            FileContactDAOImpl restartedDao = new FileContactDAOImpl(tempFile);
+            List<Contact> contacts = restartedDao.findAll();
+            assertEquals(2, contacts.size());
+            assertEquals("Alice|Team", contacts.get(0).getName());
+            assertEquals("0123456789", contacts.get(0).getPhoneNumber());
+            assertEquals("Alice|Team", restartedDao.findByName("ALICE|TEAM").getName());
+            assertEquals("Bob", contacts.get(1).getName());
+        } finally {
+            Files.deleteIfExists(tempFile);
+        }
+    }
+
+    @Test
+    public void testMalformedStoredPhoneIsStorageExceptionWithCause() throws Exception {
+        Path tempFile = Files.createTempFile("contact", ".txt");
+        try {
+            Files.writeString(tempFile, "Alice|not-a-number\n");
+            FileContactDAOImpl dao = new FileContactDAOImpl(tempFile);
+
+            ContactStorageException error = assertThrows(
+                    ContactStorageException.class, dao::findAll);
+            assertNotNull(error.getCause());
+            assertTrue(error.getMessage().contains("line 1"));
+        } finally {
+            Files.deleteIfExists(tempFile);
+        }
+    }
+
+    @Test
+    public void testMissingDelimiterIsStorageException() throws Exception {
+        Path tempFile = Files.createTempFile("contact", ".txt");
+        try {
+            Files.writeString(tempFile, "missing-delimiter\n");
+            FileContactDAOImpl dao = new FileContactDAOImpl(tempFile);
+            assertThrows(ContactStorageException.class, dao::findAll);
+        } finally {
+            Files.deleteIfExists(tempFile);
+        }
     }
 
     @Test

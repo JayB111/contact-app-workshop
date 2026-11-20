@@ -20,26 +20,30 @@ public class FileContactDAOImpl implements ContactDAO {
         List<Contact> contacts = new ArrayList<>();
         try (BufferedReader reader = Files.newBufferedReader(filePath)) {
             String line;
+            int lineNumber = 0;
             while ((line = reader.readLine()) != null) {
-                String[] parts = line.trim().split("\\|"); // ✅ Use pipe as delimiter
-                if (parts.length != 2) {
-                    throw new IllegalArgumentException("Invalid record format: " + line);
+                lineNumber++;
+                // The phone is always ten digits, so the final pipe separates
+                // the phone from a name that may itself contain pipe characters.
+                int separator = line.lastIndexOf('|');
+                if (separator <= 0 || separator == line.length() - 1) {
+                    throw new ContactStorageException(
+                            "Invalid record format at line " + lineNumber,
+                            new IllegalArgumentException("Missing name or phone delimiter"));
                 }
-                String name = parts[0].trim();
-                String phone = parts[1].trim();
 
-                if (name.isEmpty() || phone.isEmpty()) {
-                    throw new IllegalArgumentException("Invalid contact data: " + line);
+                String name = line.substring(0, separator).trim();
+                String phone = line.substring(separator + 1).trim();
+                try {
+                    contacts.add(new Contact(name, phone));
+                } catch (IllegalArgumentException e) {
+                    throw new ContactStorageException("Invalid contact at line " + lineNumber, e);
                 }
-
-                contacts.add(new Contact(name, phone));
             }
+        } catch (NoSuchFileException e) {
+            return Collections.emptyList();
         } catch (IOException e) {
-            if (Files.notExists(filePath)) {
-                return Collections.emptyList();
-            } else {
-                throw new ContactStorageException("Error reading file", e);
-            }
+            throw new ContactStorageException("Error reading file", e);
         }
         return contacts;
     }
@@ -62,7 +66,6 @@ public class FileContactDAOImpl implements ContactDAO {
             throw new DuplicateContactException("Duplicate contact: " + contact.getName());
         }
 
-        //List<Contact> contacts = findAll();
         List<Contact> contacts = new ArrayList<>(findAll());
         contacts.add(contact);
 
@@ -77,7 +80,7 @@ public class FileContactDAOImpl implements ContactDAO {
             }
         }
 
-        try (BufferedWriter writer = Files.newBufferedWriter(filePath, StandardOpenOption.CREATE, StandardOpenOption.WRITE)) {
+        try (BufferedWriter writer = Files.newBufferedWriter(filePath, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.WRITE)) {
             for (Contact c : contacts) {
                 writer.write(c.getName() + "|" + c.getPhoneNumber() + "\n");
             }
