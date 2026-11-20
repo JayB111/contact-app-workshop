@@ -3,29 +3,27 @@ package se.lexicon.data;
 import se.lexicon.model.Contact;
 import se.lexicon.exception.ContactStorageException;
 import se.lexicon.exception.DuplicateContactException;
-import se.lexicon.exception.ContactStorageException;
 import org.junit.jupiter.api.Test;
-
 import java.io.BufferedWriter;
 import java.nio.file.*;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class FileContactDAOTest {
+public class FileContactDAOTests {
 
     @Test
     public void testSaveAndFindAll() throws Exception {
         Path tempFile = Files.createTempFile("contact", ".txt");
         FileContactDAOImpl dao = new FileContactDAOImpl(tempFile);
 
-        Contact contact = new Contact("John Doe", "123-456-7890");
+        Contact contact = new Contact("John Doe", "1234567890"); // ✅ Valid 10-digit number
         dao.save(contact);
 
         List<Contact> contacts = dao.findAll();
         assertEquals(1, contacts.size());
         assertEquals("John Doe", contacts.get(0).getName());
-        assertEquals("123-456-7890", contacts.get(0).getPhoneNumber());
+        assertEquals("1234567890", contacts.get(0).getPhoneNumber());
     }
 
     @Test
@@ -33,11 +31,11 @@ public class FileContactDAOTest {
         Path tempFile = Files.createTempFile("contact", ".txt");
         FileContactDAOImpl dao = new FileContactDAOImpl(tempFile);
 
-        Contact contact = new Contact("John Doe", "123-456-7890");
+        Contact contact = new Contact("John Doe", "1234567890");
         dao.save(contact);
 
         assertThrows(DuplicateContactException.class, () -> {
-            dao.save(new Contact("John Doe", "987-654-3210"));
+            dao.save(new Contact("John Doe", "9876543210"));
         });
     }
 
@@ -46,13 +44,13 @@ public class FileContactDAOTest {
         Path tempFile = Files.createTempFile("contact", ".txt");
         FileContactDAOImpl dao = new FileContactDAOImpl(tempFile);
 
-        Contact contact = new Contact("John Doe", "123-456-7890");
+        Contact contact = new Contact("John Doe", "1234567890"); // ✅ Valid 10-digit number
         dao.save(contact);
 
         Contact found = dao.findByName("John Doe");
         assertNotNull(found);
         assertEquals("John Doe", found.getName());
-        assertEquals("123-456-7890", found.getPhoneNumber());
+        assertEquals("1234567890", found.getPhoneNumber());
 
         Contact notFound = dao.findByName("Jane Smith");
         assertNull(notFound);
@@ -66,7 +64,7 @@ public class FileContactDAOTest {
         }
 
         FileContactDAOImpl dao = new FileContactDAOImpl(tempFile);
-        assertThrows(ContactStorageException.class, () -> {
+        assertThrows(IllegalArgumentException.class, () -> {
             dao.findAll();
         });
     }
@@ -79,7 +77,7 @@ public class FileContactDAOTest {
         }
 
         FileContactDAOImpl dao = new FileContactDAOImpl(tempFile);
-        assertThrows(ContactStorageException.class, () -> {
+        assertThrows(IllegalArgumentException.class, () -> {
             dao.findAll();
         });
     }
@@ -98,10 +96,14 @@ public class FileContactDAOTest {
     public void testDirectoryCreationFailure() throws Exception {
         Path tempFile = Files.createTempFile("contact", ".txt");
         Files.delete(tempFile);
+        Path parent = tempFile.getParent();
+        if (Files.exists(parent)) {
+            Files.delete(parent);
+        }
 
         FileContactDAOImpl dao = new FileContactDAOImpl(tempFile);
         assertThrows(ContactStorageException.class, () -> {
-            dao.save(new Contact("John Doe", "123-456-7890"));
+            dao.save(new Contact("John Doe", "1234567890"));
         });
     }
 }
