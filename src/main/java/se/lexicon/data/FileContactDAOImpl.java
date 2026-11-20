@@ -21,7 +21,7 @@ public class FileContactDAOImpl implements ContactDAO {
         try (BufferedReader reader = Files.newBufferedReader(filePath)) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] parts = line.trim().split(",");
+                String[] parts = line.trim().split("\\|"); // ✅ Use pipe as delimiter
                 if (parts.length != 2) {
                     throw new IllegalArgumentException("Invalid record format: " + line);
                 }

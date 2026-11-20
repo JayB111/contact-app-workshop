@@ -17,7 +17,7 @@ public class FileContactDAOTests {
         Path tempFile = Files.createTempFile("contact", ".txt");
         FileContactDAOImpl dao = new FileContactDAOImpl(tempFile);
 
-        Contact contact = new Contact("John Doe", "1234567890"); // ✅ Valid 10-digit number
+        Contact contact = new Contact("John Doe", "1234567890");
         dao.save(contact);
 
         List<Contact> contacts = dao.findAll();
@@ -44,7 +44,7 @@ public class FileContactDAOTests {
         Path tempFile = Files.createTempFile("contact", ".txt");
         FileContactDAOImpl dao = new FileContactDAOImpl(tempFile);
 
-        Contact contact = new Contact("John Doe", "1234567890"); // ✅ Valid 10-digit number
+        Contact contact = new Contact("John Doe", "1234567890");
         dao.save(contact);
 
         Contact found = dao.findByName("John Doe");
@@ -95,10 +95,14 @@ public class FileContactDAOTests {
     @Test
     public void testDirectoryCreationFailure() throws Exception {
         Path tempFile = Files.createTempFile("contact", ".txt");
-        Files.delete(tempFile);
         Path parent = tempFile.getParent();
+
+        // Delete the temp file first to ensure the parent directory is empty
+        Files.delete(tempFile);
+
+        // Now delete the parent directory
         if (Files.exists(parent)) {
-            Files.delete(parent);
+            Files.delete(parent); // ✅ Ensure parent directory is deleted
         }
 
         FileContactDAOImpl dao = new FileContactDAOImpl(tempFile);
