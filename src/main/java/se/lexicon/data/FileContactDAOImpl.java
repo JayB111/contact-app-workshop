@@ -62,7 +62,8 @@ public class FileContactDAOImpl implements ContactDAO {
             throw new DuplicateContactException("Duplicate contact: " + contact.getName());
         }
 
-        List<Contact> contacts = findAll();
+        //List<Contact> contacts = findAll();
+        List<Contact> contacts = new ArrayList<>(findAll());
         contacts.add(contact);
 
         Path parent = filePath.getParent();

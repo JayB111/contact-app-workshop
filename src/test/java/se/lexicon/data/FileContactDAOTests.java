@@ -91,22 +91,18 @@ public class FileContactDAOTests {
     @Test
     public void testDirectoryCreationFailure() throws Exception {
         Path tempDir = Files.createTempDirectory("file-contact-dao-test-");
-        Path daoFile = tempDir.resolve("contacts.csv");
-        Files.createFile(daoFile);
 
-        try {
-            Files.delete(daoFile);
-            if (Files.exists(tempDir)) {
-                Files.delete(tempDir);
-            }
+        Path blockerFile = tempDir.resolve("not-a-directory");
 
-            FileContactDAOImpl dao = new FileContactDAOImpl(daoFile);
-            assertThrows(ContactStorageException.class, () -> {
-                dao.save(new Contact("John Doe", "1234567890"));
-            });
-        } finally {
-            Files.deleteIfExists(daoFile);
-            Files.deleteIfExists(tempDir);
-        }
+        Files.createFile(blockerFile);
+
+        Path daoFile = blockerFile.resolve("contacts.csv");
+
+        FileContactDAOImpl dao = new FileContactDAOImpl(daoFile);
+
+        assertThrows(ContactStorageException.class,
+
+                () -> dao.save(new Contact("John Doe", "1234567890")));
+
     }
 }
