@@ -11,43 +11,40 @@
 | Carl — Member 5 | @Matojotam |
 | Padma — Member 6 | @Padmaqaauto |
 
-## 2. Task Selection
+## 2. Current Task Responsibilities
 
-Everyone is welcome to choose the task they are most interested in. No tasks have been assigned yet. We will discuss everyone's preferences before dividing the work.
-
-### Task 1 — Contact Model
+### Member 1 — Jay: Contact Model
 - Create the Contact class.
 - Add name and phone number fields.
 - Implement validation.
-- Handle invalid input.
+- Add getters, setters and toString.
+- Write unit tests for the Contact model.
 
-### Task 2 — Custom Exceptions
-- Create ContactStorageException.
-- Create DuplicateContactException.
+### Member 2 — Veselina: User Interface
+- Original responsibility: ContactView.
+- Currently unable to participate due to illness.
+- Her assigned work is being covered by Padma.
+
+### Member 3 — Tuku: Main, Integration, Custom Exceptions and DAO Interface- Completed Custom Exceptions.
+- Completed the ContactDAO interface.
+- Took over Padma's original responsibilities.
+
+### Member 4 — Anas: Controller and Exception Handling
+- Create ContactController.
 - Implement the central ExceptionHandler.
+- Connect the view and data layer.
+- Coordinate application operations.
 
-### Task 3 — DAO Interface
-- Create the ContactDAO interface.
-- Define methods for saving, finding and searching contacts.
-- Agree on method signatures with the team.
-
-### Task 4 — File Storage
+### Member 5 — Carl: File Storage
 - Implement FileContactDAOImpl.
 - Read contacts from a file.
 - Save contacts to a file.
 - Handle file-related errors.
+- Write tests for file storage.
 
-### Task 5 — User Interface
-- Create ContactView.
-- Display menus and messages.
-- Receive user input using Scanner.
-- Keep console interaction inside the view.
-
-### Task 6 — Controller and Main
-- Create ContactController.
-- Connect the view and data layer.
-- Coordinate application operations.
-- Create Main to start the application.
+### Member 6 — Padma: User Interface
+- Took over Veselina's ContactView responsibilities due to her illness.
+- Continue the user interface implementation.
 
 ## 3. Shared Responsibilities
 
@@ -61,12 +58,11 @@ All team members will contribute to:
 ## 4. Suggested Workflow
 
 1. Discuss the application design together.
-2. Choose tasks based on everyone's preferences.
-3. Agree on how the different components communicate.
-4. Work on separate Git branches.
-5. Commit regularly.
-6. Create pull requests for review.
-7. Test the integrated application.
+2. Agree on responsibilities and how the components communicate.
+3. Work on separate Git branches.
+4. Commit regularly.
+5. Create pull requests for review.
+6. Test the integrated application.
 
 ## 5. Questions to Agree On Before Coding
 
@@ -79,17 +75,7 @@ All team members will contribute to:
 ## 6. Goal
 
 Our goal is to work together, divide the responsibilities fairly, and build an application where all components fit together correctly.
-## 7. Task Selection — Team Preferences
 
-Each member can indicate their preferred task. Please add your name beside your first choice. We will discuss the choices together before confirming responsibilities.
+## 7. Additional Work and Integration
 
-| Task | Area | Preferred member |
-|---|---|---|
-| 1 | Contact Model | To be chosen |
-| 2 | Custom Exceptions | To be chosen |
-| 3 | DAO Interface | To be chosen |
-| 4 | File Storage | To be chosen |
-| 5 | User Interface | To be chosen |
-| 6 | Controller and Main | To be chosen |
-
-**Note:** These are starting suggestions. If several people prefer the same task, we can discuss how to share the work or adjust responsibilities.
+Tuku has also taken over Padma's original tasks after completing his own work. The team is coordinating the remaining integration work as needed.
