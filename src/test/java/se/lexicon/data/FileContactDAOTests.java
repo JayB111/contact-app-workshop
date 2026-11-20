@@ -60,13 +60,11 @@ public class FileContactDAOTests {
     public void testInvalidFormat() throws Exception {
         Path tempFile = Files.createTempFile("contact", ".txt");
         try (BufferedWriter writer = Files.newBufferedWriter(tempFile)) {
-            writer.write("John,Doe,123\n");
+            writer.write("John|Doe|123\n"); // ✅ Use pipe (invalid format)
         }
 
         FileContactDAOImpl dao = new FileContactDAOImpl(tempFile);
-        assertThrows(IllegalArgumentException.class, () -> {
-            dao.findAll();
-        });
+        assertThrows(IllegalArgumentException.class, dao::findAll);
     }
 
     @Test
@@ -77,9 +75,7 @@ public class FileContactDAOTests {
         }
 
         FileContactDAOImpl dao = new FileContactDAOImpl(tempFile);
-        assertThrows(IllegalArgumentException.class, () -> {
-            dao.findAll();
-        });
+        assertThrows(IllegalArgumentException.class, dao::findAll);
     }
 
     @Test

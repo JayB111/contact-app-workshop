@@ -71,6 +71,8 @@ public class FileContactDAOImpl implements ContactDAO {
                 Files.createDirectories(parent);
             } catch (IOException e) {
                 throw new ContactStorageException("Error creating directory", e);
+            } catch (UnsupportedOperationException e) {
+                throw new ContactStorageException("Directory creation failed", e);
             }
         }
 
