@@ -6,6 +6,8 @@
 
 **Team:** Group 4 (six members)
 
+**Report prepared by:** Anas (`@jackaldzn-blip`), on behalf of Group 4
+
 **Repository:** [JayB111/contact-app-workshop](https://github.com/JayB111/contact-app-workshop)
 
 **Final reviewed `main` commit:** `d5c662d57f027abf7d39a5547e2685d7b3adaae2`
@@ -42,7 +44,7 @@ The original task specification in [`docs/Team-task-description.md`](Team-task-d
 | **2** | **Padma** — `@Padmaqaauto` | Checked exceptions and `ContactDAO` contract | Added DAO/exception tests (PR #11), `ContactView` tests (PR #13), and the working application entry point (PR #16), taking on integration work beyond the initial assignment. |
 | **3** | **Carl** — `@Matojotam` | File-backed DAO and persistence tests | Delivered `FileContactDAOImpl` and its storage tests (PR #14), then refined storage error handling (PR #15); collaborated through review and follow-up fixes. |
 | **4** | **Veselina** — `@vlinakonsa-svg` | `ContactView` and console interaction | Veselina was unavailable during the workshop. Tuku took over the view implementation (PR #7), while Padma contributed the dedicated view tests (PR #13), allowing the team to complete this component. |
-| **5** | **Anas** — `@jackaldzn-blip` | `ContactController`, centralized `ExceptionHandler`, and tests | Implemented controller, error handling, and their tests (PR #8); reviewed integration; prepared documentation improvements (PR #9, ultimately closed without merge); ran end-to-end acceptance checks and corrected final storage defects with regression tests (PR #17). |
+| **5** | **Anas** — `@jackaldzn-blip` | `ContactController`, centralized `ExceptionHandler`, and tests | Implemented controller, error handling, and their tests (PR #8); reviewed integration; prepared documentation improvements (PR #9, ultimately closed without merge); ran end-to-end acceptance checks and corrected final storage defects with regression tests (PR #17); prepared and compiled the final Group 4 team report. |
 | **6** | **Tuku** — `@tukue` | Startup, integration, testing, and README | Created detailed task descriptions (PR #1); integrated the `ContactDAO` contract, custom exceptions, model compatibility updates, console view, and Java 25 CI workflow (PR #7). The final `Main` implementation was subsequently delivered by Padma. |
 
 **Attribution note:** Original member numbers are those in the agreed detailed task description. The later `WORK_PLAN.md` and README temporarily used different numbers. This report preserves the historical assignment and separately records transferred work. Pull requests establish merged code and documentation changes; they do not capture every discussion, review, or informal contribution.
