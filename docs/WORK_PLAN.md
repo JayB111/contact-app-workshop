@@ -1,81 +1,61 @@
-# Contact App Workshop — Team Work Plan
+# Group 4 — Contact App Workshop: Reconciled Work Plan
 
-## 1. Team Members
+**Status:** Implemented and verified for the agreed workshop scope.
 
-| Member | GitHub |
+## 1. Which document governs member numbering?
+
+The original specification in [Team-task-description.md](Team-task-description.md) remains the historical record of **assigned responsibilities and member numbers**. Later project documents were edited after responsibilities changed and temporarily renumbered members. **We do not renumber people retroactively.** Instead, the table below records actual implementation and test contributions alongside the original assignments.
+
+## 2. Group 4 — Assigned versus delivered responsibilities
+
+| Original no. | Contributor | Original task | Final confirmed contributions |
+|---|---|---|---|
+| **1** | Jay (`@JayB111`) | `Contact` and validation tests | Implemented the `Contact` model and eight JUnit tests, [PR #5](https://github.com/JayB111/contact-app-workshop/pull/5); contributed to initial project structure; organized and updated the work plan, [PR #12](https://github.com/JayB111/contact-app-workshop/pull/12); coordinated team responsibilities and communication, reviewed PRs, offered feedback, followed up on issues, and coordinated reviews, merges, and final integration as project lead. |
+| **2** | Padma (`@Padmaqaauto`) | `ContactDAO` interface and checked exceptions | Dedicated DAO/exception tests [#11](https://github.com/JayB111/contact-app-workshop/pull/11); view tests [#13](https://github.com/JayB111/contact-app-workshop/pull/13); final `Main` [#16](https://github.com/JayB111/contact-app-workshop/pull/16). |
+| **3** | Carl (`@Matojotam`) | File DAO and tests | File-based DAO and persistence tests [#14](https://github.com/JayB111/contact-app-workshop/pull/14); directory-error fix [#15](https://github.com/JayB111/contact-app-workshop/pull/15). |
+| **4** | Veselina (`@vlinakonsa-svg`) | `ContactView` | Veselina was unavailable during the workshop. Tuku implemented the assigned view component (PR #7), and Padma added its dedicated JUnit tests (PR #13). The team redistributed this work to maintain progress. |
+| **5** | Anas (`@jackaldzn-blip`) | `ContactController` and `ExceptionHandler` | Controller, error handling, and tests [#8](https://github.com/JayB111/contact-app-workshop/pull/8); acceptance tests and final storage fixes/tests [#17](https://github.com/JayB111/contact-app-workshop/pull/17); separate proposed documentation PR #9 was closed without merge; prepared and compiled the final Group 4 team report. |
+| **6** | Tuku (`@tukue`) | Startup, integration, tests, README | Original detailed task breakdown [#1](https://github.com/JayB111/contact-app-workshop/pull/1); DAO contract, exceptions, view, and GitHub Actions CI [#7](https://github.com/JayB111/contact-app-workshop/pull/7). The final startup implementation was contributed by Padma. |
+
+Only repository-verifiable delivery is attributed to a specific merged PR. Code review, discussion, learning assistance, and other informal work may not appear in PR files.
+
+## 3. Agreed functional and method contracts
+
+| Subject | Contract |
 |---|---|
-| Jay — Member 1 | @JayB111 |
-| Veselina — Member 2 | @vlinakonsa-svg |
-| Tuku — Member 3 | @tukue |
-| Anas — Member 4 | @jackaldzn-blip |
-| Carl — Member 5 | @Matojotam |
-| Padma — Member 6 | @Padmaqaauto |
+| Name | Non-blank, trimmed in the `Contact` model |
+| Phone number | Exactly ten digits (`^\d{10}$`) |
+| Duplicates | Match names case-insensitively; reject with `DuplicateContactException` |
+| Missing file | `findAll()` returns an empty contact list |
+| Search | `findByName()` returns a `Contact` or `null`, ignoring case |
+| Invalid stored record | `ContactStorageException` with error context |
+| Invalid user input | `IllegalArgumentException`, mapped to user-readable message |
+| File format | `name|phoneNumber`; separator is final `|` in the record |
+| Entry point | `se.lexicon.controller.Main` creates DAO, view, controller and starts the menu |
+| Menu options | 1 list, 2 add, 3 search, 4 exit |
 
-## 2. Current Task Responsibilities
+See [ARCHITECTURE.md](ARCHITECTURE.md) for the actual class structure and contracts.
 
-### Member 1 — Jay: Contact Model
-- Create the Contact class.
-- Add name and phone number fields.
-- Implement validation.
-- Add getters, setters and toString.
-- Write unit tests for the Contact model.
+## 4. Integration and review history
 
-### Member 2 — Veselina: User Interface
-- Original responsibility: ContactView.
-- Currently unable to participate due to illness.
-- Her assigned work is being covered by Padma.
+- **Kickoff (Thursday, 19 November, 09:30 CET):** the six-member group agreed on task allocation, shared interfaces, and parallel development. Original task specification PR #1, model PR #5, and CI/shared-contract/view work PR #7 followed.
+- **Core integration (Friday, 20 November):** tests PRs #11 and #13, controller PR #8, work-plan PR #12, file DAO PRs #14–15, and entry-point PR #16 were integrated. The first 49 JUnit tests passed, while scripted acceptance identified two file-storage edge cases.
+- **Final verification (Monday, 23 November):** PR #17 was merged with storage fixes and regression tests. The final `main` build passed 52 tests, and the corrected application passed all 11 scripted acceptance scenarios.
 
-### Member 3 — Tuku: Main, Integration, Custom Exceptions and DAO Interface- Completed Custom Exceptions.
-- Completed the ContactDAO interface.
-- Took over Padma's original responsibilities.
+## 5. Completion and testing checklist
 
-### Member 4 — Anas: Controller and Exception Handling
-- Create ContactController.
-- Implement the central ExceptionHandler.
-- Connect the view and data layer.
-- Coordinate application operations.
+- [x] Model validation and representation.
+- [x] View, controller, and four-option console menu.
+- [x] DAO interface and file-backed persistence.
+- [x] Main entry point launches complete application.
+- [x] Duplicate, input, and malformed-storage error handling.
+- [x] 52 JUnit tests pass in final merged GitHub Actions run.
+- [x] All 11 scripted console acceptance scenarios pass against corrected logic.
+- [x] Documentation reconciled for original assignments and changed responsibilities (in this proposed documentation update).
+- [ ] Independently recorded human-operated acceptance session against final merged commit (not confirmed in reviewed evidence).
 
-### Member 5 — Carl: File Storage
-- Implement FileContactDAOImpl.
-- Read contacts from a file.
-- Save contacts to a file.
-- Handle file-related errors.
-- Write tests for file storage.
+**CI evidence:** [Final main run](https://github.com/JayB111/contact-app-workshop/actions/runs/45133250161), JDK 25, `mvn clean verify`; Maven targets Java 17 compatibility. An IntelliJ test-source configuration problem reported on one team member's computer is separate from the passing Maven and command-line workflows.
 
-### Member 6 — Padma: User Interface
-- Took over Veselina's ContactView responsibilities due to her illness.
-- Continue the user interface implementation.
+## 6. Development lessons
 
-## 3. Shared Responsibilities
-
-All team members will contribute to:
-- Reviewing the design.
-- Testing and integration.
-- Code reviews.
-- Fixing integration issues.
-- Making sure the application works as a whole.
-
-## 4. Suggested Workflow
-
-1. Discuss the application design together.
-2. Agree on responsibilities and how the components communicate.
-3. Work on separate Git branches.
-4. Commit regularly.
-5. Create pull requests for review.
-6. Test the integrated application.
-
-## 5. Questions to Agree On Before Coding
-
-- What makes two contacts duplicates?
-- What happens if the contact file does not exist?
-- What happens if a contact cannot be found?
-- What phone number format should we accept?
-- Which methods should use our custom exceptions?
-
-## 6. Goal
-
-Our goal is to work together, divide the responsibilities fairly, and build an application where all components fit together correctly.
-
-## 7. Additional Work and Integration
-
-Tuku has also taken over Padma's original tasks after completing his own work. The team is coordinating the remaining integration work as needed.
+The workshop highlighted the value of shared method contracts before parallel development, CI on every PR, writing tests at the boundary between layers, keeping acceptance scenarios separate from unit tests, and preserving both *assigned* and *actual* work in the team record. For a balanced narrative and full evidence links, see [FINAL_TEAM_REPORT.md](FINAL_TEAM_REPORT.md).

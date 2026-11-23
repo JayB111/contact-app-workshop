@@ -1,66 +1,81 @@
-# Contact App Workshop
+# Group 4 — Contact App Workshop
 
-## About the Project
+A Java console contact-management application created by **Group 4** for the Lexicon workshop. See the [final team report](docs/FINAL_TEAM_REPORT.md) for the workshop timeline and evidence.
 
-This project is a Java-based Contact Management Application developed as part of a Lexicon programming workshop.
+**Project status:** Core workshop scope completed. The final `main` build passes **52 JUnit tests** on GitHub Actions; an independent 11-scenario scripted console acceptance run passes **11/11**. The IDE issue reported on one developer machine does not affect the successful Maven/CI build. A separately observed human manual test on the final commit is not recorded.
 
-The application will allow users to manage contacts through a console-based interface. Contact information will be stored in a file.
+## Features
 
-The project is designed using an MVC-inspired architecture, DAO pattern, custom exceptions and unit testing.
+- Menu-driven **list**, **add**, and **search contacts**; clean **exit**.
+- Non-blank names and exactly ten digits in phone numbers.
+- Case-insensitive duplicate detection and name search.
+- Text-file persistence across application restarts; missing file treated as empty.
+- Centralized validation, storage, and duplicate error messages without ending the menu loop.
+- MVC-inspired layering with `ContactDAO` and `FileContactDAOImpl`.
 
-## Team Members
+## Build and run
 
-| Member | GitHub |
-|---|---|
-| Jay — Member 1 | [@JayB111](https://github.com/JayB111) |
-| Veselina — Member 2 | [@vlinakonsa-svg](https://github.com/vlinakonsa-svg) |
-| Tuku — Member 3 | [@tukue](https://github.com/tukue) |
-| Anas — Member 4 | [@jackaldzn-blip](https://github.com/jackaldzn-blip) |
-| Carl — Member 5 | [@Matojotam](https://github.com/Matojotam) |
-| Padma — Member 6 | [@Padmaqaauto](https://github.com/Padmaqaauto) |
+**Prerequisites:** JDK 17 or newer and Apache Maven. GitHub Actions verifies the application on **JDK 25**; `pom.xml` compiles Java **17-compatible** source and bytecode.
 
-## Project Structure
+From the repository root:
 
-```text
-contact-app-workshop
-├── docs
-│   ├── WORK_PLAN.md
-│   └── ARCHITECTURE.md
-├── src
-│   ├── main
-│   │   └── java
-│   │       └── se.lexicon
-│   │           ├── model
-│   │           ├── data
-│   │           ├── view
-│   │           ├── controller
-│   │           └── exception
-│   └── test
-│       └── java
-├── pom.xml
-└── README.md
+```bash
+mvn clean verify
+java -cp target/classes se.lexicon.controller.Main
 ```
 
-## Documentation
+To compile without running the tests, use `mvn clean compile` before the `java` command.
 
-- [Work Plan](docs/WORK_PLAN.md)
-- [Architecture Diagram](docs/ARCHITECTURE.md)
+The application writes `contacts.txt` into the **current working directory**. For example, launch the command from the repository root to keep the file there. Do not commit real personal contact data.
 
-## Technologies
+```text
+Contact App
+1. List contacts
+2. Add contact
+3. Search contacts
+4. Exit
+```
 
-- Java
-- Maven
-- JUnit
-- Git and GitHub
+## Storage format and behavior
 
-## Team Workflow
+- Each line in `contacts.txt` is one contact in `name|phoneNumber` form.
+- Because phone numbers contain exactly ten digits, the reader uses the **last `|`** as the separator; names containing `|` can be saved and read back.
+- `ContactDAO.findAll()` returns an empty list when the file is absent.
+- `ContactDAO.findByName()` returns `null` for no match; matching is case-insensitive.
+- Duplicate names throw `DuplicateContactException`.
+- File and malformed-record errors throw `ContactStorageException`; invalid new user inputs throw `IllegalArgumentException`.
+- This is intentionally simple, one-record-per-line workshop storage, not a concurrent database or a full escaped-record interchange format.
 
-We will agree on task responsibilities together before implementation.
+## Architecture and tests
 
-Each member will work on a separate Git branch. Changes will be submitted through pull requests for review before merging into the main branch.
+| Area | Implementation |
+|---|---|
+| Model | `se.lexicon.model.Contact` |
+| View | `se.lexicon.view.ContactView` |
+| Controller | `se.lexicon.controller.ContactController` |
+| DAO | `se.lexicon.data.ContactDAO`, `FileContactDAOImpl` |
+| Exceptions | `ContactStorageException`, `DuplicateContactException`, `ExceptionHandler` |
+| Entry point | **`se.lexicon.controller.Main`** |
+| Tests | JUnit Jupiter 5.12.2; Maven Surefire 3.5.2 |
+| CI | GitHub Actions, JDK 25, `mvn clean verify` |
 
-Testing and integration will be shared responsibilities.
+- [Technical architecture and UML](docs/ARCHITECTURE.md)
+- [Original six-member task specification](docs/Team-task-description.md)
+- [Reconciled assignment and contributions record](docs/WORK_PLAN.md)
+- [Final team workshop report](docs/FINAL_TEAM_REPORT.md)
+- [Final CI run: 52/52 tests passed](https://github.com/JayB111/contact-app-workshop/actions/runs/45133250161)
 
-## Project Status
+## Group 4 — Team and contributions
 
-Initial project setup and planning in progress.
+The **original member numbers** come from `docs/Team-task-description.md` and are retained for consistency:
+
+| Original member | Contributor | Initial responsibility |
+|---|---|---|
+| 1 | [Jay](https://github.com/JayB111) | Contact model and tests; project coordination |
+| 2 | [Padma](https://github.com/Padmaqaauto) | Exceptions and DAO contract |
+| 3 | [Carl](https://github.com/Matojotam) | File-backed DAO and tests |
+| 4 | [Veselina](https://github.com/vlinakonsa-svg) | Contact view |
+| 5 | [Anas](https://github.com/jackaldzn-blip) | Controller and centralized exception handling |
+| 6 | [Tuku](https://github.com/tukue) | Main, integration, tests, and documentation |
+
+Responsibilities changed during development. Tuku integrated the view, shared contracts, and CI; Padma added contract and view tests and the final entry point; Anas supplied controller tests and the final storage acceptance fixes. These changes are documented with merged PR references in the [work plan](docs/WORK_PLAN.md) and [final report](docs/FINAL_TEAM_REPORT.md). This does not erase the original allocation or assume that every informal contribution is visible in GitHub.
