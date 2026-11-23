@@ -40,7 +40,7 @@ The original task specification in [`docs/Team-task-description.md`](Team-task-d
 
 | Original member | Person / GitHub | Original assignment | Verified delivery or support |
 |---|---|---|---|
-| **1** | **Jay** — `@JayB111` | `Contact` model, validation and model tests | Implemented the model and eight model tests (PR #5); maintained the team work plan (PR #12); coordinated reviews and merges as repository/project lead. |
+| **1** | **Jay** — `@JayB111` | `Contact` model, validation and model tests | Implemented the `Contact` model, validation, and eight JUnit tests (PR #5); helped establish the initial project structure; organized and updated the team work plan (PR #12); coordinated responsibilities and team communication; reviewed pull requests, provided feedback, followed up on issues, and coordinated reviews, merges, and final integration as project lead. |
 | **2** | **Padma** — `@Padmaqaauto` | Checked exceptions and `ContactDAO` contract | Added DAO/exception tests (PR #11), `ContactView` tests (PR #13), and the working application entry point (PR #16), taking on integration work beyond the initial assignment. |
 | **3** | **Carl** — `@Matojotam` | File-backed DAO and persistence tests | Delivered `FileContactDAOImpl` and its storage tests (PR #14), then refined storage error handling (PR #15); collaborated through review and follow-up fixes. |
 | **4** | **Veselina** — `@vlinakonsa-svg` | `ContactView` and console interaction | Veselina was unavailable during the workshop. Tuku took over the view implementation (PR #7), while Padma contributed the dedicated view tests (PR #13), allowing the team to complete this component. |
