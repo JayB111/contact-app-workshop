@@ -15,7 +15,7 @@ The original specification in [Team-task-description.md](Team-task-description.m
 | **3** | Carl (`@Matojotam`) | File DAO and tests | File-based DAO and persistence tests [#14](https://github.com/JayB111/contact-app-workshop/pull/14); directory-error fix [#15](https://github.com/JayB111/contact-app-workshop/pull/15). |
 | **4** | Veselina (`@vlinakonsa-svg`) | `ContactView` | Veselina was unavailable during the workshop. Tuku implemented the assigned view component (PR #7), and Padma added its dedicated JUnit tests (PR #13). The team redistributed this work to maintain progress. |
 | **5** | Anas (`@jackaldzn-blip`) | `ContactController` and `ExceptionHandler` | Controller, error handling, and tests [#8](https://github.com/JayB111/contact-app-workshop/pull/8); acceptance tests and final storage fixes/tests [#17](https://github.com/JayB111/contact-app-workshop/pull/17); separate proposed documentation PR #9 was closed without merge; prepared and compiled the final Group 4 team report. |
-| **6** | Tuku (`@tukue`) | Startup, integration, tests, README | Original detailed task breakdown [#1](https://github.com/JayB111/contact-app-workshop/pull/1); DAO contract, exceptions, view, and GitHub Actions CI [#7](https://github.com/JayB111/contact-app-workshop/pull/7). The final startup implementation was contributed by Padma. |
+| **6** | Tuku (`@tukue`) | Startup, integration, tests, README | Original detailed task breakdown [#1](https://github.com/JayB111/contact-app-workshop/pull/1); DAO contract, exceptions, view, and initial GitHub Actions CI [#7](https://github.com/JayB111/contact-app-workshop/pull/7); aligned CI with the Java 17 project target [#18](https://github.com/JayB111/contact-app-workshop/pull/18). The final startup implementation was contributed by Padma. |
 
 Only repository-verifiable delivery is attributed to a specific merged PR. Code review, discussion, learning assistance, and other informal work may not appear in PR files.
 
@@ -40,7 +40,7 @@ See [ARCHITECTURE.md](ARCHITECTURE.md) for the actual class structure and contra
 
 - **Kickoff (Thursday, 19 November, 09:30 CET):** the six-member group agreed on task allocation, shared interfaces, and parallel development. Original task specification PR #1, model PR #5, and CI/shared-contract/view work PR #7 followed.
 - **Core integration (Friday, 20 November):** tests PRs #11 and #13, controller PR #8, work-plan PR #12, file DAO PRs #14–15, and entry-point PR #16 were integrated. The first 49 JUnit tests passed, while scripted acceptance identified two file-storage edge cases.
-- **Final verification (Monday, 23 November):** PR #17 was merged with storage fixes and regression tests. The final `main` build passed 52 tests, and the corrected application passed all 11 scripted acceptance scenarios.
+- **Final verification (Monday, 23 November):** PR #17 was merged with storage fixes and regression tests, and PR #18 aligned CI with Java 17. The final `main` build passed 52 tests using JDK 17; the corrected application passed all 11 scripted acceptance scenarios.
 
 ## 5. Completion and testing checklist
 
@@ -54,7 +54,7 @@ See [ARCHITECTURE.md](ARCHITECTURE.md) for the actual class structure and contra
 - [x] Documentation reconciled for original assignments and changed responsibilities (in this proposed documentation update).
 - [ ] Independently recorded human-operated acceptance session against final merged commit (not confirmed in reviewed evidence).
 
-**CI evidence:** [Final main run](https://github.com/JayB111/contact-app-workshop/actions/runs/45133250161), JDK 25, `mvn clean verify`; Maven targets Java 17 compatibility. An IntelliJ test-source configuration problem reported on one team member's computer is separate from the passing Maven and command-line workflows.
+**CI evidence:** [Final main run](https://github.com/JayB111/contact-app-workshop/actions/runs/45141713579), JDK 17, `mvn clean verify`; this matches the Java 17 target in Maven. The previous JDK 25 run also passed. An IntelliJ test-source configuration problem reported on one team member's computer is separate from the passing Maven and command-line workflows.
 
 ## 6. Development lessons
 
