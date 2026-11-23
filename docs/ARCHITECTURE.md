@@ -112,7 +112,7 @@ mvn clean verify
 java -cp target/classes se.lexicon.controller.Main
 ```
 
-The CI environment uses JDK 25; Maven compiles Java 17-compatible classes. JUnit Jupiter 5.12.2 covers model, view, controller, contract and file DAO behaviors. The final merged run passed **52/52 tests**. An additional 11-scenario scripted console run passed **11/11** with the accepted storage fixes.
+The CI environment now uses **JDK 17**, matching the Java 17 compilation target in `pom.xml` (PR #18). The earlier JDK 25 build was also successful. JUnit Jupiter 5.12.2 covers model, view, controller, contract and file DAO behaviors. The final JDK 17 run passed **52/52 tests**. An additional 11-scenario scripted console run passed **11/11** with the accepted storage fixes.
 
 **Historical correction:** the original detailed task specification proposed `se.lexicon.Main`, but the implemented entry point is **`se.lexicon.controller.Main`**. This document describes the actual merged source and does not request a package move.
 
@@ -123,4 +123,4 @@ The implementation is an educational application with a simple line-based file f
 - [Detailed original task specification](Team-task-description.md)
 - [Reconciled team work plan](WORK_PLAN.md)
 - [Final team report](FINAL_TEAM_REPORT.md)
-- [Final GitHub Actions run](https://github.com/JayB111/contact-app-workshop/actions/runs/45133250161)
+- [Final GitHub Actions run](https://github.com/JayB111/contact-app-workshop/actions/runs/45141713579)

@@ -10,7 +10,7 @@
 
 **Repository:** [JayB111/contact-app-workshop](https://github.com/JayB111/contact-app-workshop)
 
-**Final reviewed `main` commit:** `d5c662d57f027abf7d39a5547e2685d7b3adaae2`
+**Final reviewed `main` commit:** `98bb23b9fbcc48d7c324479ccf42af9d7bd78f73`
 
 ## 1. Executive summary
 
@@ -18,7 +18,7 @@ The team developed a Java console-based contact management application as a coll
 
 The completed application allows users to list, add, and search contacts and exit through a menu. Contact records are validated and persisted in a text file. The design separates the data model, console view, controller, data-access layer, and exception handling. Work progressed from shared task planning to implementation, integration, testing, and acceptance fixes.
 
-The final merged version passed **52 JUnit tests with zero failures or errors** in GitHub Actions using Java 25, with Java 17 compilation compatibility. An additional **11-scenario scripted console acceptance suite passed 11/11** against the corrected application logic, covering file persistence across restarts, duplicate detection, invalid input, and storage-error handling. A separate interactive, human-operated acceptance session on the final commit was not independently documented; this should not be confused with a failed application test.
+The final merged version passed **52 JUnit tests with zero failures or errors** in GitHub Actions using **Java 17**, matching the project compilation target. The earlier JDK 25 run passed the same suite. An additional **11-scenario scripted console acceptance suite passed 11/11** against the corrected application logic, covering file persistence across restarts, duplicate detection, invalid input, and storage-error handling. A separate interactive, human-operated acceptance session on the final commit was not independently documented; this should not be confused with a failed application test.
 
 **Overall assessment:** The agreed core functionality is implemented and the final merged build is verified. The workshop met its principal technical and collaborative objectives, with a small number of documentation and developer-environment lessons identified during the final review.
 
@@ -45,7 +45,7 @@ The original task specification in [`docs/Team-task-description.md`](Team-task-d
 | **3** | **Carl** — `@Matojotam` | File-backed DAO and persistence tests | Delivered `FileContactDAOImpl` and its storage tests (PR #14), then refined storage error handling (PR #15); collaborated through review and follow-up fixes. |
 | **4** | **Veselina** — `@vlinakonsa-svg` | `ContactView` and console interaction | Veselina was unavailable during the workshop. Tuku took over the view implementation (PR #7), while Padma contributed the dedicated view tests (PR #13), allowing the team to complete this component. |
 | **5** | **Anas** — `@jackaldzn-blip` | `ContactController`, centralized `ExceptionHandler`, and tests | Implemented controller, error handling, and their tests (PR #8); reviewed integration; prepared documentation improvements (PR #9, ultimately closed without merge); ran end-to-end acceptance checks and corrected final storage defects with regression tests (PR #17); prepared and compiled the final Group 4 team report. |
-| **6** | **Tuku** — `@tukue` | Startup, integration, testing, and README | Created detailed task descriptions (PR #1); integrated the `ContactDAO` contract, custom exceptions, model compatibility updates, console view, and Java 25 CI workflow (PR #7). The final `Main` implementation was subsequently delivered by Padma. |
+| **6** | **Tuku** — `@tukue` | Startup, integration, testing, and README | Created detailed task descriptions (PR #1); integrated the `ContactDAO` contract, custom exceptions, model compatibility updates, console view, and initial Java 25 CI workflow (PR #7); subsequently aligned CI with the Java 17 project target (PR #18). The final `Main` implementation was delivered by Padma. |
 
 **Attribution note:** Original member numbers are those in the agreed detailed task description. The later `WORK_PLAN.md` and README temporarily used different numbers. This report preserves the historical assignment and separately records transferred work. Pull requests establish merged code and documentation changes; they do not capture every discussion, review, or informal contribution.
 
@@ -68,7 +68,7 @@ The implemented menu options are **1 List contacts, 2 Add contact, 3 Search cont
 
 The storage file uses one `name|phoneNumber` record per line. In the final fix, the parser identifies the **last pipe separator**, preserving a valid contact name containing `|`. Malformed file records are reported through `ContactStorageException`, rather than being presented as a user-input error. The class diagram and method-level contracts are documented in [`docs/ARCHITECTURE.md`](ARCHITECTURE.md).
 
-The build uses **Maven**, **JUnit Jupiter 5.12.2**, and **Maven Surefire 3.5.2**. GitHub Actions runs `mvn clean verify` on **JDK 25**, while `pom.xml` targets **Java 17 source and bytecode compatibility**. The entry point is `se.lexicon.controller.Main` in the actual merged code, even though the original task brief proposed `se.lexicon.Main`.
+The build uses **Maven**, **JUnit Jupiter 5.12.2**, and **Maven Surefire 3.5.2**. GitHub Actions runs `mvn clean verify` on **JDK 17**, matching `pom.xml` and its **Java 17 source and bytecode target** (PR #18). Earlier CI runs also passed on JDK 25. The entry point is `se.lexicon.controller.Main` in the actual merged code, even though the original task brief proposed `se.lexicon.Main`.
 
 ## 5. Work sequence and milestones
 
@@ -76,11 +76,11 @@ The build uses **Maven**, **JUnit Jupiter 5.12.2**, and **Maven Surefire 3.5.2**
 |---|---|
 | **Thursday, 19 November — kickoff at 09:30** | Group 4 agreed on initial responsibilities and interfaces and began parallel development. The task breakdown (PR #1), model and validation (PR #5), and shared contracts, view and CI workflow (PR #7) were merged. Controller integration revealed a compatibility issue requiring adjustment. |
 | **Friday, 20 November — integration and testing** | Controller and error-handling tests (PR #8), DAO and exception tests (PR #11), work plan (PR #12), view tests (PR #13), file persistence and tests (PRs #14–15), and application startup (PR #16) were integrated. The project reached 49 passing JUnit tests. Scripted acceptance uncovered two file-storage edge cases; the corrective PR #17 added three regression tests. |
-| **Monday, 23 November — final verification** | PR #17 was merged, and the final `main` CI passed 52 JUnit tests with no failures. The corrected application passed all 11 scripted console acceptance scenarios. The final report and documentation reconciliation were prepared. |
+| **Monday, 23 November — final verification** | PR #17 was merged with acceptance fixes, and PR #18 aligned CI with Java 17. The updated `main` CI passed 52 JUnit tests with no failures; the corrected application passed all 11 scripted console acceptance scenarios. The final report and documentation reconciliation were prepared. |
 
 ## 6. Testing and acceptance evidence
 
-**Unit and automated integration testing.** The final GitHub Actions run for merged commit `d5c662d` completed successfully with **52 tests, 0 failures, 0 errors, and 0 skipped**. The test suite covers the model, controller, exception handler, exceptions, DAO contract, console view, and file DAO. See [the final CI run](https://github.com/JayB111/contact-app-workshop/actions/runs/45133250161).
+**Unit and automated integration testing.** The final GitHub Actions run for merged commit `98bb23b` completed successfully on **JDK 17** with **52 tests, 0 failures, 0 errors, and 0 skipped**. The previous JDK 25 run was also successful. The test suite covers the model, controller, exception handler, exceptions, DAO contract, console view, and file DAO. See [the final CI run](https://github.com/JayB111/contact-app-workshop/actions/runs/45141713579).
 
 **Console acceptance testing.** The 11-scenario test starts the real Java application in separate JVM sessions, provides scripted console inputs, inspects output and error handling, and reads the generated temporary `contacts.txt` files. The final run passed **11/11 scenarios**:
 
@@ -96,7 +96,7 @@ The build uses **Maven**, **JUnit Jupiter 5.12.2**, and **Maven Surefire 3.5.2**
 10. Preserve a valid name containing `|` across save and reload.
 11. Reject an empty search query and continue safely.
 
-For transparency, the local acceptance verification compiled a mirror of the relevant final production classes using **OpenJDK 21 with `--release 17`**; the separately recorded CI run built and tested the merged GitHub repository using **JDK 25**. The acceptance runner was an automated console simulation, not an independently witnessed interactive manual test on Jay's IntelliJ installation.
+For transparency, the local acceptance verification compiled a mirror of the relevant final production classes using **OpenJDK 21 with `--release 17`**; the latest recorded CI run built and tested the merged GitHub repository using **JDK 17** (after the CI update). The acceptance runner was an automated console simulation, not an independently witnessed interactive manual test on Jay's IntelliJ installation.
 
 ## 7. Challenges and how the team addressed them
 
@@ -139,5 +139,6 @@ The agreed core features are present on `main`; **52 JUnit tests passed in CI**,
 - [File DAO refinement — PR #15](https://github.com/JayB111/contact-app-workshop/pull/15)
 - [Main entry point — PR #16](https://github.com/JayB111/contact-app-workshop/pull/16)
 - [Final storage acceptance fixes — PR #17](https://github.com/JayB111/contact-app-workshop/pull/17)
-- [Final merged build, 52 tests passing](https://github.com/JayB111/contact-app-workshop/actions/runs/45133250161)
+- [Align CI with Java 17 — PR #18](https://github.com/JayB111/contact-app-workshop/pull/18)
+- [Final merged build, 52 tests passing](https://github.com/JayB111/contact-app-workshop/actions/runs/45141713579)
 

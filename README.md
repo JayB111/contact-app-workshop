@@ -15,7 +15,7 @@ A Java console contact-management application created by **Group 4** for the Lex
 
 ## Build and run
 
-**Prerequisites:** JDK 17 or newer and Apache Maven. GitHub Actions verifies the application on **JDK 25**; `pom.xml` compiles Java **17-compatible** source and bytecode.
+**Prerequisites:** JDK 17 or newer and Apache Maven. GitHub Actions verifies the application on **JDK 17**, matching the **Java 17 source and bytecode target** in `pom.xml` (PR #18). The earlier JDK 25 build also passed.
 
 From the repository root:
 
@@ -57,13 +57,13 @@ Contact App
 | Exceptions | `ContactStorageException`, `DuplicateContactException`, `ExceptionHandler` |
 | Entry point | **`se.lexicon.controller.Main`** |
 | Tests | JUnit Jupiter 5.12.2; Maven Surefire 3.5.2 |
-| CI | GitHub Actions, JDK 25, `mvn clean verify` |
+| CI | GitHub Actions, JDK 17, `mvn clean verify` |
 
 - [Technical architecture and UML](docs/ARCHITECTURE.md)
 - [Original six-member task specification](docs/Team-task-description.md)
 - [Reconciled assignment and contributions record](docs/WORK_PLAN.md)
 - [Final team workshop report](docs/FINAL_TEAM_REPORT.md)
-- [Final CI run: 52/52 tests passed](https://github.com/JayB111/contact-app-workshop/actions/runs/45133250161)
+- [Final CI run: 52/52 tests passed](https://github.com/JayB111/contact-app-workshop/actions/runs/45141713579)
 
 ## Group 4 — Team and contributions
 
